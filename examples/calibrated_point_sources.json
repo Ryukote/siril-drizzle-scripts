@@ -1,0 +1,19 @@
+{
+  "method": "fast_mu",
+  "calibration_mode": "calibrated",
+  "pixfrac": 0.5,
+  "scale": 0.5,
+  "max_iterations": 65,
+  "gamma": 1.0,
+  "apply_positivity": true,
+  "convergence_threshold": 1e-06,
+  "input_dir": "./data/lights",
+  "output_dir": "./drizzled_output",
+  "bias_file": "./data/biases",
+  "dark_file": "./data/darks",
+  "flat_file": "./data/flats",
+  "debayer": true,
+  "equalize_cfa": true,
+  "output_format": "fit",
+  "bit_depth": 16
+}

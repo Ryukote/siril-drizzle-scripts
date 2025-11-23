@@ -1,0 +1,19 @@
+{
+  "method": "standard",
+  "calibration_mode": "uncalibrated",
+  "pixfrac": 0.8,
+  "scale": 0.5,
+  "max_iterations": 100,
+  "gamma": 1.0,
+  "apply_positivity": false,
+  "convergence_threshold": 1e-06,
+  "input_dir": "./lights",
+  "output_dir": "./drizzled_output",
+  "bias_file": null,
+  "dark_file": null,
+  "flat_file": null,
+  "debayer": true,
+  "equalize_cfa": true,
+  "output_format": "fit",
+  "bit_depth": 16
+}
