@@ -2,6 +2,26 @@
 
 Python scripts for advanced drizzle processing in Siril, supporting multiple drizzle methods for both calibrated and uncalibrated images.
 
+## ⭐ NEW: VeraLux Drizzle Studio
+
+**Professional GUI for complete calibration + drizzle workflow!**
+
+```bash
+python veralux_drizzle_studio.py
+```
+
+Features:
+- 🎨 **Modern Dark UI** - VeraLux design system
+- 📁 **Complete Workflow** - Calibration + Drizzle in one tool
+- ⚡ **4 Drizzle Methods** - Standard, iDrizzle, fiDrizzle-DC, fiDrizzle-MU
+- 📊 **Real-time Progress** - Live log output and progress tracking
+- 🎯 **Smart Presets** - Optimized configurations for different targets
+- 💾 **Settings Persistence** - Remembers your preferences
+
+Perfect for both beginners and advanced users!
+
+---
+
 ## Overview
 
 This repository provides easy-to-use Python scripts for drizzle processing in Siril, based on the latest research in image reconstruction:
@@ -45,19 +65,42 @@ cd siril-drizzle-scripts
 
 ## Quick Start
 
-### 1. Using the GUI (Recommended for beginners)
+### 1. ⭐ Using VeraLux Drizzle Studio (RECOMMENDED)
+
+**The easiest way to process your images!**
+
+```bash
+python veralux_drizzle_studio.py
+```
+
+**Complete workflow in 5 steps:**
+
+1. **Select Light Frames** - Browse to your light frames directory
+2. **Add Calibration** (Optional) - Select bias, dark, and flat frames for best quality
+3. **Choose Method** - Pick from 4 drizzle algorithms (fiDrizzle-MU recommended)
+4. **Adjust Parameters** - Fine-tune pixfrac and scale (or use presets)
+5. **Click STACK** - Monitor real-time progress and enjoy your result!
+
+The studio provides:
+- ✨ **Beautiful Dark UI** inspired by professional imaging software
+- 📋 **Real-time Processing Log** with detailed progress information
+- 🎯 **Smart Presets** for point sources, extended sources, high resolution
+- 💾 **Persistent Settings** remembers your last configuration
+- 🛠️ **Complete Control** over all drizzle parameters
+
+### 2. Using the Classic GUI
 
 ```bash
 python drizzle_gui.py
 ```
 
-The GUI provides:
+The classic GUI provides:
 - **Presets** for common use cases
 - **Visual parameter adjustment** with sliders
 - **Configuration save/load**
 - **One-click processing**
 
-### 2. Quick Command-line Scripts
+### 3. Quick Command-line Scripts
 
 #### Uncalibrated Images (Standard Drizzle)
 
@@ -77,7 +120,7 @@ python calibrated_drizzle.py ./lights ./biases ./darks ./flats ./drizzled_output
 python point_source_drizzle.py ./lights ./drizzled_output
 ```
 
-### 3. Using Configuration Files
+### 4. Using Configuration Files
 
 ```bash
 # Use a preset configuration
