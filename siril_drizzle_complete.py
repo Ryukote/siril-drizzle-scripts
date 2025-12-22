@@ -566,7 +566,7 @@ Available presets:
     )
 
     subparsers = parser.add_subparsers(dest='command', help='Processing mode')
-    subparsers.required = True
+    subparsers.required = False
 
     # Standard drizzle command
     standard_parser = subparsers.add_parser('standard', help='Quick standard drizzle (uncalibrated)')
@@ -622,10 +622,36 @@ Available presets:
 
     args = parser.parse_args()
 
+    # If no command specified, show helpful message
+    if not args.command:
+        print("\n" + "="*60)
+        print("SIRIL DRIZZLE - All-in-One Processing Tool")
+        print("="*60)
+        print("\nNo command specified. Please choose a processing mode:\n")
+        print("Quick Start Examples:")
+        print("-" * 60)
+        print("1. Standard drizzle (uncalibrated):")
+        print("   python siril_drizzle_complete.py standard ./lights\n")
+        print("2. With calibration frames:")
+        print("   python siril_drizzle_complete.py calibrated ./lights \\")
+        print("       -b ./biases -d ./darks -f ./flats\n")
+        print("3. Point source optimized:")
+        print("   python siril_drizzle_complete.py point-source ./lights\n")
+        print("4. List available presets:")
+        print("   python siril_drizzle_complete.py list-presets\n")
+        print("-" * 60)
+        print("\nFor detailed help:")
+        print("   python siril_drizzle_complete.py --help")
+        print("   python siril_drizzle_complete.py <command> --help")
+        print("="*60 + "\n")
+        sys.exit(0)
+
     try:
         args.func(args)
     except Exception as e:
         print(f"\nError: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
 
