@@ -1,0 +1,68 @@
+#!/usr/bin/env siril-cli
+# fiDrizzle-MU Script for Siril
+# ==============================
+#
+# Pokreće fiDrizzle-MU algoritam na registrovane slike
+#
+# Korišćenje:
+#   1. Registruj slike u Sirilu (register pp_light)
+#   2. Pokreni ovaj script: Scripts → Run Script → fidrizzle_mu.ssf
+#   3. Ili iz konzole: load fidrizzle_mu.ssf
+#
+# NAPOMENA: Prilagodi putanju do Python skripte i parametre po potrebi!
+
+requires 0.99.8
+
+# ============================================================================
+# KONFIGURACIJA - PRILAGODI PO POTREBI
+# ============================================================================
+
+# Putanja do fiDrizzle-MU Python skripte
+# PRILAGODI: Ubaci punu putanju do skripte
+set -fidrizzle_script "/home/user/siril-drizzle-scripts/siril_fidrizzle_mu.py"
+
+# Parametri
+set -psr 0.5                    # Pixel Scale Ratio (0.5 = 2x finer sampling)
+set -iterations 65              # Broj iteracija
+set -gamma 1.0                  # Gamma parametar
+set -positivity "--positivity"  # Positivity constraint (ostavi prazno za disable)
+
+# Output fajl
+set -output "fidrizzle_result.fits"
+
+# ============================================================================
+# SCRIPT - NE MENJAJ ISPOD OVE LINIJE
+# ============================================================================
+
+echo "================================================================"
+echo "fiDrizzle-MU - Fast Iterative Drizzle with Multiplicative Updates"
+echo "================================================================"
+echo ""
+
+# Proveri da li postoje registrovane slike
+echo "Proveravam registrovane slike..."
+echo ""
+
+# Prebroj registrovane slike
+set -image_count 0
+
+# NAPOMENA: Siril ne podržava direktno prebrojavanje,
+# pa Python skripta će to uraditi
+
+echo "Pokretanje fiDrizzle-MU sa parametrima:"
+echo "  PSR: $psr"
+echo "  Iteracije: $iterations"
+echo "  Gamma: $gamma"
+echo "  Output: $output"
+echo ""
+
+# Pokreni Python skriptu
+# NAPOMENA: Koristi wildcard za registrovane slike
+exec python3 $fidrizzle_script r_pp_light_*.fit -o $output --psr $psr --iterations $iterations --gamma $gamma $positivity
+
+echo ""
+echo "================================================================"
+echo "Procesiranje završeno!"
+echo "================================================================"
+echo ""
+echo "Učitaj rezultat: load $output"
