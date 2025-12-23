@@ -104,7 +104,22 @@ The classic GUI provides:
 
 **Direct implementation of the fiDrizzle-MU algorithm!**
 
-For maximum quality and control, use the standalone fiDrizzle-MU script:
+#### Option A: GUI (Najlakše!) 🎨
+
+```bash
+python fidrizzle_mu_gui.py
+# ili
+./fidrizzle_mu_gui.py
+```
+
+**Funkcionalnosti GUI-a:**
+- 📁 File picker za slike (drag & drop support)
+- ⚙️ Intuitivno podešavanje parametara
+- ⭐ Presets za različite tipove objekata
+- 📊 Live progress bar i log output
+- 🎨 Dark theme interface
+
+#### Option B: Command Line
 
 ```bash
 # Basic usage with registered images
