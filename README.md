@@ -100,7 +100,35 @@ The classic GUI provides:
 - **Configuration save/load**
 - **One-click processing**
 
-### 3. Quick Command-line Scripts
+### 3. Standalone fiDrizzle-MU (ADVANCED) ⭐ NEW!
+
+**Direct implementation of the fiDrizzle-MU algorithm!**
+
+For maximum quality and control, use the standalone fiDrizzle-MU script:
+
+```bash
+# Basic usage with registered images
+./siril_fidrizzle_mu.py r_pp_light_*.fit -o result.fits
+
+# With custom parameters (recommended for point sources)
+./siril_fidrizzle_mu.py r_pp_light_*.fit -o result.fits \
+    --psr 0.5 \
+    --iterations 65 \
+    --gamma 1.0
+
+# With shift data file
+./siril_fidrizzle_mu.py image_*.fit -o result.fits --shifts shifts.txt
+```
+
+**See [FIDRIZZLE_MU_GUIDE.md](FIDRIZZLE_MU_GUIDE.md) for complete documentation!**
+
+This is a **complete standalone implementation** of the algorithm from Zhang et al. (2025), offering:
+- ✅ True multiplicative updates (not just Siril's drizzle)
+- ✅ Positivity constraints
+- ✅ Optimal for point sources and gravitational lenses
+- ✅ 5-7x faster convergence than fiDrizzle-DC
+
+### 4. Quick Command-line Scripts
 
 #### Uncalibrated Images (Standard Drizzle)
 
@@ -234,20 +262,24 @@ Enforces non-negative flux values:
 
 ```
 siril-drizzle-scripts/
-├── drizzle_config.py          # Configuration module
-├── siril_drizzle.py            # Main processing engine
-├── drizzle_gui.py              # GUI interface
-├── quick_standard_drizzle.py   # Quick standard drizzle
-├── calibrated_drizzle.py       # Calibrated processing
-├── point_source_drizzle.py     # Point source optimized
-├── examples/                   # Example configurations
+├── drizzle_config.py              # Configuration module
+├── siril_drizzle.py               # Main processing engine
+├── drizzle_gui.py                 # Classic GUI interface
+├── veralux_drizzle_studio.py      # Modern GUI (VeraLux)
+├── siril_drizzle_complete.py      # All-in-one script
+├── siril_fidrizzle_mu.py          # ⭐ Standalone fiDrizzle-MU
+├── quick_standard_drizzle.py      # Quick standard drizzle
+├── calibrated_drizzle.py          # Calibrated processing
+├── point_source_drizzle.py        # Point source optimized
+├── FIDRIZZLE_MU_GUIDE.md          # ⭐ Complete fiDrizzle-MU guide
+├── examples/                      # Example configurations
 │   ├── uncalibrated_standard.json
 │   ├── calibrated_point_sources.json
 │   └── extended_sources.json
-├── documentation/              # Research papers
+├── documentation/                 # Research papers
 │   ├── Drizzle.pdf
 │   ├── 3D drizzle.pdf
-│   ├── fiDrizzle-MU.pdf
+│   ├── fiDrizzle-MU.pdf           # ⭐ Original research paper
 │   └── pySiril documentation.md
 └── README.md
 ```
@@ -314,6 +346,68 @@ config = DrizzleConfig(
 with SirilDrizzleProcessor(config) as processor:
     processor.process()
 ```
+
+### Example 4: Standalone fiDrizzle-MU - Maximum Quality
+
+**Direct implementation of the algorithm from Zhang et al. (2025)**
+
+First, register your images in Siril:
+```
+# In Siril
+register pp_light
+```
+
+Then use standalone fiDrizzle-MU:
+```bash
+# For point sources (stars, quasars, gravitational lenses)
+./siril_fidrizzle_mu.py r_pp_light_*.fit -o fidrizzle_result.fits \
+    --psr 0.5 \
+    --iterations 65 \
+    --gamma 1.0
+
+# For extended sources (galaxies, nebulae)
+./siril_fidrizzle_mu.py r_pp_light_*.fit -o fidrizzle_result.fits \
+    --psr 0.5 \
+    --iterations 100 \
+    --gamma 1.0
+
+# High resolution mode (4x finer sampling)
+./siril_fidrizzle_mu.py r_pp_light_*.fit -o fidrizzle_result.fits \
+    --psr 0.25 \
+    --iterations 150 \
+    --gamma 1.0
+```
+
+**Or use Python API:**
+
+```python
+from siril_fidrizzle_mu import FiDrizzleMU
+
+# Create processor
+processor = FiDrizzleMU(
+    psr=0.5,              # 2x finer sampling
+    gamma=1.0,            # Standard convergence rate
+    max_iterations=65,    # As per Zhang et al. 2025
+    positivity_constraint=True,  # Suppress ringing
+    verbose=True
+)
+
+# Load registered images
+processor.load_images(['r_pp_light_00001.fit', 'r_pp_light_00002.fit', ...])
+
+# Process
+result = processor.process()
+
+# Save
+processor.save_result(result, 'fidrizzle_result.fits')
+```
+
+**Why use standalone fiDrizzle-MU?**
+- Direct implementation of the research paper algorithm
+- Better convergence (5-7x faster than fiDrizzle-DC)
+- Superior flux concentration for point sources
+- Optimal for gravitational lensing studies
+- Complete control over all parameters
 
 ## Calibration Modes
 
